@@ -6,6 +6,9 @@ import org.apache.commons.commons_lang3.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.NativeQuery;
+import org.slf4j.Logger;
+
+import logger.DbAdapterLogger;
 
 public class hello 
 {
@@ -26,7 +29,10 @@ public class hello
 		{
 			Object [] os = (Object[]) l.get(i);
 			for(Object o : os)
-				System.out.println("output - > " + o.toString());
+			{
+				Logger log = DbAdapterLogger.getProjectLogger(); 
+				log.info("output - > " + o.toString());
+			}
 		}
 		//Commit transaction
 		session.getTransaction().commit();
