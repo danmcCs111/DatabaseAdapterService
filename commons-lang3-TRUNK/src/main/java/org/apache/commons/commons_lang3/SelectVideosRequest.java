@@ -2,7 +2,7 @@ package org.apache.commons.commons_lang3;
 
 import java.sql.Date;
 
-public class Video 
+public class SelectVideosRequest 
 {
 	private int videoId;
 	private String 
@@ -11,43 +11,43 @@ public class Video
 		videoExtension;
 	private Date insertDate;
 	
-	public int getVideoId() 
+	public int getVideoDatabaseVideoVideoId() 
 	{
 		return videoId;
 	}
-	public void setVideoId(int videoId) 
+	public void setVideoDatabaseVideoVideoId(int videoId) 
 	{
 		this.videoId = videoId;
 	}
 	
-	public String getVideoName() 
+	public String getVideoDatabaseVideoVideoName() 
 	{
 		return videoName;
 	}
-	public void setVideoName(String videoName) 
+	public void setVideoDatabaseVideoVideoName(String videoName) 
 	{
 		this.videoName = videoName;
 	}
 	
-	public String getVideoPath() 
+	public String getVideoDatabaseVideoVideoPath() 
 	{
 		return videoPath;
 	}
-	public void setVideoPath(String videoPath) 
+	public void setVideoDatabaseVideoVideoPath(String videoPath) 
 	{
 		this.videoPath = videoPath;
 	}
 	
-	public String getVideoExtension() 
+	public String getVideoDatabaseVideoVideoExtension() 
 	{
 		return videoExtension;
 	}
-	public void setVideoExtension(String videoExtension) 
+	public void setVideoDatabaseVideoVideoExtension(String videoExtension) 
 	{
 		this.videoExtension = videoExtension;
 	}
 	
-	public Date getInsertDate() 
+	public Date getVideoDatabaseVideoInsertDate() 
 	{
 		return insertDate;
 	}

@@ -77,7 +77,7 @@ public class HibernateUtil {
 		//we can set mapping file or class with annotation
 		//addClass(Employee1.class) will look for resource
 		// com/journaldev/hibernate/model/Employee1.hbm.xml (not good)
-		configuration.addAnnotatedClass(Video.class);
+		configuration.addAnnotatedClass(SelectVideosRequest.class);
 		
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
     	System.out.println("Hibernate Java Config serviceRegistry created");

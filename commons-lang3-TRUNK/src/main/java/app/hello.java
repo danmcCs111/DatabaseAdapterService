@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.apache.commons.commons_lang3.HibernateUtil;
-import org.apache.commons.commons_lang3.Video;
+import org.apache.commons.commons_lang3.SelectVideosRequest;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.NativeQuery;
@@ -16,11 +16,11 @@ public class hello
 	{
 		System.out.println("hello world");
 		
-		Video video = new Video();
-		video.setVideoId(2);
-		video.setVideoName("David");
-		video.setVideoPath("Developer");
-		video.setVideoExtension(".url");
+		SelectVideosRequest video = new SelectVideosRequest();
+		video.setVideoDatabaseVideoVideoId(2);
+		video.setVideoDatabaseVideoVideoName("David");
+		video.setVideoDatabaseVideoVideoPath("Developer");
+		video.setVideoDatabaseVideoVideoExtension(".url");
 		video.setInsertDate(new Date(Calendar.getInstance().getTime().getTime()));
 		
 		//Get Session
@@ -28,7 +28,6 @@ public class hello
 		Session session = sessionFactory.openSession();
 		//start transaction
 		session.beginTransaction();
-//		session.create
 		//Save the Model object
 		NativeQuery nq = session.createSQLQuery("select * from videodatabase.Video");
 		List l = nq.getResultList();
@@ -40,7 +39,7 @@ public class hello
 		}
 		//Commit transaction
 		session.getTransaction().commit();
-		System.out.println("Employee ID=" + video.getVideoId());
+		System.out.println("Employee ID=" + video.getVideoDatabaseVideoVideoId());
 		
 		//terminate session factory, otherwise program won't end
 		sessionFactory.close();
