@@ -11,47 +11,47 @@ public class SelectVideosRequest
 		videoExtension;
 	private Date insertDate;
 	
-	public int getVideoDatabaseVideoVideoId() 
+	public int getVideoDatabase_Video_VideoId() 
 	{
 		return videoId;
 	}
-	public void setVideoDatabaseVideoVideoId(int videoId) 
+	public void setVideoDatabase_Video_VideoId(int videoId) 
 	{
 		this.videoId = videoId;
 	}
 	
-	public String getVideoDatabaseVideoVideoName() 
+	public String getVideoDatabase_Video_VideoName() 
 	{
 		return videoName;
 	}
-	public void setVideoDatabaseVideoVideoName(String videoName) 
+	public void setVideoDatabase_Video_VideoName(String videoName) 
 	{
 		this.videoName = videoName;
 	}
 	
-	public String getVideoDatabaseVideoVideoPath() 
+	public String getVideoDatabase_Video_VideoPath() 
 	{
 		return videoPath;
 	}
-	public void setVideoDatabaseVideoVideoPath(String videoPath) 
+	public void setVideoDatabase_Video_VideoPath(String videoPath) 
 	{
 		this.videoPath = videoPath;
 	}
 	
-	public String getVideoDatabaseVideoVideoExtension() 
+	public String getVideoDatabase_Video_VideoExtension() 
 	{
 		return videoExtension;
 	}
-	public void setVideoDatabaseVideoVideoExtension(String videoExtension) 
+	public void setVideoDatabase_Video_VideoExtension(String videoExtension) 
 	{
 		this.videoExtension = videoExtension;
 	}
 	
-	public Date getVideoDatabaseVideoInsertDate() 
+	public Date getVideoDatabase_Video_InsertDate() 
 	{
 		return insertDate;
 	}
-	public void setInsertDate(Date insertDate) 
+	public void setVideoDatabase_Video_InsertDate(Date insertDate) 
 	{
 		this.insertDate = insertDate;
 	}
