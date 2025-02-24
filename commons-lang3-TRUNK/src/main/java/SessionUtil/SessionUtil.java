@@ -1,4 +1,4 @@
-package app;
+package SessionUtil;
 
 import java.util.List;
 
@@ -10,19 +10,25 @@ import org.slf4j.Logger;
 
 import logger.DbAdapterLogger;
 
-public class hello 
+public class SessionUtil 
 {
-	public static void main(String [] args)
+	private SessionFactory sessionFactory;
+	private Session session;
+	
+	public void createSession()
 	{
-		System.out.println("hello world");
-		
 		//Get Session
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.openSession();
+		this.sessionFactory = HibernateUtil.getSessionFactory();
+		this.session = sessionFactory.openSession();
+	}
+	
+	//TODO just select to log
+	public void performQueryTransaction(String query)
+	{
 		//start transaction
 		session.beginTransaction();
 		//Save the Model object
-		NativeQuery<?> nq = session.createSQLQuery("select * from videodatabase.Video");
+		NativeQuery<?> nq = session.createSQLQuery(query);
 		List<?> l = nq.getResultList();
 		
 		for(int i =0; i < l.size(); i++)
@@ -36,8 +42,10 @@ public class hello
 		}
 		//Commit transaction
 		session.getTransaction().commit();
-		
-		//terminate session factory, otherwise program won't end
+	}
+	
+	public void closeSession()
+	{
 		sessionFactory.close();
 	}
 }

@@ -7,18 +7,17 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
-public class HibernateUtil {
-
+public class HibernateUtil 
+{
 	//XML based configuration
 	private static SessionFactory sessionFactory;
-	
 	//Annotation based configuration
 	private static SessionFactory sessionAnnotationFactory;
-	
 	//Property based configuration
 	private static SessionFactory sessionJavaConfigFactory;
 
-    private static SessionFactory buildSessionFactory() {
+    private static SessionFactory buildSessionFactory()
+    {
         try {
             // Create the SessionFactory from hibernate.cfg.xml
         	Configuration configuration = new Configuration();
@@ -39,7 +38,8 @@ public class HibernateUtil {
         }
     }
 
-    private static SessionFactory buildSessionAnnotationFactory() {
+    private static SessionFactory buildSessionAnnotationFactory() 
+    {
     	try {
             // Create the SessionFactory from hibernate.cfg.xml
         	Configuration configuration = new Configuration();
@@ -60,12 +60,13 @@ public class HibernateUtil {
         }
 	}
 
-    private static SessionFactory buildSessionJavaConfigFactory() {
+    private static SessionFactory buildSessionJavaConfigFactory() 
+    {
     	try {
     	Configuration configuration = new Configuration();
 		
 		//Create Properties, can be read from property files too
-		Properties props = new Properties();
+		Properties props = new Properties();//TODO
 		props.put("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
 		props.put("hibernate.connection.url", "jdbc:mysql://localhost/videodatabase");
 		props.put("hibernate.connection.username", "newuser");
@@ -77,7 +78,7 @@ public class HibernateUtil {
 		//we can set mapping file or class with annotation
 		//addClass(Employee1.class) will look for resource
 		// com/journaldev/hibernate/model/Employee1.hbm.xml (not good)
-		configuration.addAnnotatedClass(SelectVideosRequest.class);
+		configuration.addAnnotatedClass(SelectVideosRequest.class);//TODO
 		
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
     	System.out.println("Hibernate Java Config serviceRegistry created");
@@ -92,17 +93,20 @@ public class HibernateUtil {
         }
 	}
     
-	public static SessionFactory getSessionFactory() {
+	public static SessionFactory getSessionFactory() 
+	{
 		if(sessionFactory == null) sessionFactory = buildSessionFactory();
         return sessionFactory;
     }
 	
-	public static SessionFactory getSessionAnnotationFactory() {
+	public static SessionFactory getSessionAnnotationFactory()
+	{
 		if(sessionAnnotationFactory == null) sessionAnnotationFactory = buildSessionAnnotationFactory();
         return sessionAnnotationFactory;
     }
 	
-	public static SessionFactory getSessionJavaConfigFactory() {
+	public static SessionFactory getSessionJavaConfigFactory() 
+	{
 		if(sessionJavaConfigFactory == null) sessionJavaConfigFactory = buildSessionJavaConfigFactory();
         return sessionJavaConfigFactory;
     }

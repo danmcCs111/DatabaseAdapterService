@@ -3,7 +3,7 @@ package logger;
 import org.slf4j.Logger;
 import org.slf4j.impl.Log4jLoggerFactory;
 
-public interface DbAdapterLogger
+public interface DbAdapterLogger//TODO
 {
 	public static Logger getProjectLogger()
 	{
