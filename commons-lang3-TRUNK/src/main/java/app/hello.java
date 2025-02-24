@@ -23,13 +23,14 @@ public class hello
 		
 		//Get Session
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
 		//start transaction
-		session.beginTransaction();
+//		session.beginTransaction();
+//		session.create
 		//Save the Model object
-		session.save(video);
+//		session.save(video);
 		//Commit transaction
-		session.getTransaction().commit();
+//		session.getTransaction().commit();
 		System.out.println("Employee ID=" + video.getVideoId());
 		
 		//terminate session factory, otherwise program won't end
