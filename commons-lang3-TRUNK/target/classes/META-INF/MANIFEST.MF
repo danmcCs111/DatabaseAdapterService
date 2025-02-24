@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Built-By: danie
-Build-Jdk: 22.0.2
+Build-Jdk: 23.0.2
 Created-By: Maven Integration for Eclipse
 Implementation-Title: Hibernate Search Quickstart
 Implementation-URL: http://search.hibernate.org

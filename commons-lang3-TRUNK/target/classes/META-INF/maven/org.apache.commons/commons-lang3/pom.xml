@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+		<properties>
+				<jboss-logging-version>3.6.1.Final</jboss-logging-version>
+		</properties>
+
     <modelVersion>4.0.0</modelVersion>
 
     <!-- 
@@ -66,24 +70,68 @@
     </developers>
 
     <dependencies>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-search</artifactId>
-            <!-- When removing the <parent> node you will have to explicitly set the hibernate-search version -->
-            <version>${project.parent.version}</version>
+    <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-core</artifactId>
+		    <version>6.5.2.Final</version>
+		</dependency>
+		 <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-search-orm -->
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-search-orm</artifactId>
+		    <version>5.11.12.Final</version>
+		</dependency>
+		<dependency>
+            <groupId>org.hibernate.search</groupId>
+            <artifactId>hibernate-search-mapper-orm</artifactId>
+            <version>8.0.0.Alpha1</version> <!-- 6.0.9.Final -->
         </dependency>
+
+       <!-- <dependency>
+            <groupId>org.hibernate-orm</groupId>
+            <artifactId>hibernate-search-orm</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency> -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-search-analyzers</artifactId>
             <!-- When removing the <parent> node you will have to explicitly set the hibernate-search version -->
-            <version>${project.parent.version}</version>
+            <version>4.3.0.Alpha1</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <!-- When removing the <parent> node you have to explicitly set the Hibernate Entity Manager version -->
-            <!--<version></version>-->
+            <version>4.2.0.Final</version>
+	        <exclusions>
+		        <exclusion>
+		            <groupId>org.jboss.logging</groupId>
+		            <artifactId>jboss-logging</artifactId>
+		        </exclusion>
+	    	</exclusions>
         </dependency>
+        <dependency>
+	        <groupId>org.hibernate</groupId>
+	        <artifactId>hibernate-validator</artifactId>
+	        <version>4.3.2.Final</version>
+	    </dependency>
+         <dependency>
+	        <groupId>org.hibernate.common</groupId>
+	        <artifactId>hibernate-commons-annotations</artifactId>
+	        <version>4.0.1.Final</version>
+	        <classifier>tests</classifier>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.hibernate.search</groupId>
+	        <artifactId>hibernate-search-mapper-orm-jakarta-batch-core</artifactId>
+	        <version>8.0.0.Alpha1</version>
+	    </dependency>
+	     <dependency>
+	        <groupId>org.hibernate.javax.persistence</groupId>
+	        <artifactId>hibernate-jpa-2.0-api</artifactId>
+	        <version>1.0.1.Final</version>
+	    </dependency>
         <dependency>
             <groupId>hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
@@ -95,10 +143,48 @@
             <version>1.6.1</version>
         </dependency>
         <dependency>
+        	<groupId>mysql</groupId>
+        	<artifactId>mysql-connector-java</artifactId>
+        	<version>5.0.5</version>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+		    <groupId>org.jboss.logging</groupId>
+		    <artifactId>jboss-logging</artifactId>
+		    <version>${jboss-logging-version}</version>
+		</dependency>
+         <!-- Spring framework -->
+         <!-- https://mvnrepository.com/artifact/org.springframework.integration/spring-integration-core -->
+<dependency>
+    <groupId>org.springframework.integration</groupId>
+    <artifactId>spring-integration-core</artifactId>
+    <version>6.4.2</version>
+</dependency>
+
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-core</artifactId>
+        <version>5.3.8</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>5.3.8</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-web</artifactId>
+        <version>5.3.8</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-webmvc</artifactId>
+        <version>5.3.8</version>
+    </dependency>
     </dependencies>
 
     <build>
@@ -107,8 +193,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>11</source>
+                    <target>11</target>
                 </configuration>
             </plugin>
             <plugin>
