@@ -11,11 +11,11 @@ use videodatabase;
 commit;
 **/
 CREATE TABLE videodatabase.Video (
-    Video_Id int PRIMARY KEY,
-    Video_Name VARCHAR(300),
-    Video_Path VARCHAR(500),
-    Video_extension VARCHAR(10),
-    Insert_Date timestamp
+    Video_Id-Video-Video_Database int PRIMARY KEY,
+    Video_Name-Video-Video_Database VARCHAR(300),
+    Video_Path-Video-Video_Database VARCHAR(500),
+    Video_extension-Video-Video_Database VARCHAR(10),
+    Insert_Date-Video-Video_Database timestamp
 );
 
 commit;

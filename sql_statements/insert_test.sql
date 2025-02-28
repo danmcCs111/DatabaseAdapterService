@@ -2,11 +2,11 @@ use videodatabase;
 SET @video_id = (select count(*)+1 from videodatabase.Video);
 
 insert into videodatabase.Video 
-	(Video_Id,
-    Video_Name,
-    Video_Path,
-    Video_extension,
-    Insert_Date )
+	(Video_Id-Video-Video_Database,
+    Video_Name-Video-Video_Database,
+    Video_Path-Video-Video_Database,
+    Video_extension-Video-Video_Database,
+    Insert_Date-Video-Video_Database )
 values (
 	video_id,
     "test",
