@@ -1,6 +1,6 @@
 # DatabaseAdapterService
 
-create an executable service where database objects are maintained through a maintained ORM system based on :
+create an executable service where the database uses:
 
                     "["set|get" "\<columnname\>" "\<tablename\>" "\<database/schema\>" ]" naming convension.
 
