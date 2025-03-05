@@ -19,3 +19,8 @@ values (
 select * from videodatabase.Video;
 
 commit;
+
+
+SHOW TABLES FROM videodatabase;
+
+SHOW COLUMNS FROM videodatabase.Video;
