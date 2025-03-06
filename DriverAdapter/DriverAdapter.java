@@ -20,6 +20,7 @@ public class DriverAdapter
 	{
 		try {
 			callSelect();
+			TableDefinitions.createTableDefinitions();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
