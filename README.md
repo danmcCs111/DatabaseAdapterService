@@ -1,5 +1,7 @@
 # DatabaseAdapterService
 
+* Add Soap Service to take requests on database.
+
 create an executable service where the database uses:
 
                     "["set|get" "\<columnname\>" "\<tablename\>" "\<database\>" ]" naming convension.
