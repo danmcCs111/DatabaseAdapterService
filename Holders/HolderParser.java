@@ -2,31 +2,32 @@ package Holders;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.HashMap;
 
 public class HolderParser 
 {
 	public static Class<?> [] holders = new Class<?>[] {
-			Date.class,
-			int.class,
+			Timestamp.class,
+			Integer.class,
 			String.class
 	};
 	
-	public static HashMap<Class<?>, Class<?>> classAndHolder =  new HashMap<Class<?>, Class<?>>();
+	public static HashMap<String, Class<?>> databaseClassTypeAndHolder =  new HashMap<String, Class<?>>();
 	static {
-		classAndHolder.put(Date.class, DateHolder.class);
-		classAndHolder.put(int.class, IntegerHolder.class);
-		classAndHolder.put(String.class, StringHolder.class);
+		databaseClassTypeAndHolder.put(Timestamp.class.getName(), DateHolder.class);//TODO multiple?
+		databaseClassTypeAndHolder.put(Integer.class.getName(), IntegerHolder.class);
+		databaseClassTypeAndHolder.put(String.class.getName(), StringHolder.class);
 	}
 	
-	public static Holder getHolder(String classType, String columnName)
+	public static Holder getHolderFromDbType(String databaseClassType, String columnName)
 	{
 		Holder retHolder = null;
-		for(Class<?> clazz : holders)
+		for(Class<?> dbClassType : holders)
 		{
-			if(clazz.getName().equals(classType))
+			if(databaseClassType.startsWith(dbClassType.getName()))
 			{
-				Class<?> holdClass = classAndHolder.get(clazz);
+				Class<?> holdClass = databaseClassTypeAndHolder.get(dbClassType.getName());
 				try {
 					retHolder = (Holder) holdClass.getDeclaredConstructor(String.class).newInstance(columnName);
 				} catch (InstantiationException e) {

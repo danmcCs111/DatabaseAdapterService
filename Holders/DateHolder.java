@@ -35,4 +35,11 @@ public class DateHolder implements Holder
 	{
 		return this.columnName;
 	}
+
+	@Override
+	public String getReturnValueString() 
+	{
+		return this.ret.toString();
+	}
+
 }

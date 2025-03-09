@@ -35,4 +35,10 @@ public class StringHolder implements Holder
 		return this.columnName;
 	}
 
+	@Override
+	public String getReturnValueString() 
+	{
+		return this.ret;
+	}
+
 }

@@ -7,6 +7,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import Holders.Holder;
 
@@ -16,27 +17,33 @@ public class TableDefinitions
 	private static final String [][] DATABASE_AND_TABLES = new String [][] {
 			{"VideoDatabase", "Video"}
 	};
-	private static final ArrayList<TableDefinition> tableDefinitions = new ArrayList<TableDefinition>();
-	
+	private static final HashMap<String, ArrayList<TableDefinition>> tableDefinitions = new HashMap<String, ArrayList<TableDefinition>>();
 	
 	public static void createTableDefinitions()
 	{
 		for(String [] databaseAndTable : DATABASE_AND_TABLES)
 		{
 			try {
-				TableDefinition td = collectTableDefinition(SHOW_COLUMNS_PREFIX_QUERY + " " + 
+				ArrayList<TableDefinition> tds = collectTableDefinition(
+						SHOW_COLUMNS_PREFIX_QUERY + " " + 
 						databaseAndTable[0] + "." + 
-						databaseAndTable[1]);
-				tableDefinitions.add(td);
+						databaseAndTable[1]
+				);
+				tableDefinitions.put(databaseAndTable[0] + "_" + databaseAndTable[1], tds);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
 	}
 	
-	public static TableDefinition collectTableDefinition(String query) throws SQLException
+	public static ArrayList<TableDefinition> getTableDefinition(String def)
 	{
-		TableDefinition td = new TableDefinition();
+		return tableDefinitions.get(def);
+	}
+	
+	public static ArrayList<TableDefinition> collectTableDefinition(String query) throws SQLException
+	{
+		ArrayList<TableDefinition> tds = new ArrayList<TableDefinition>();
 		Connection conn = null;
 		try {
 	    	conn = DriverManager.getConnection(DriverAdapter.DB_URL, DriverAdapter.USER, DriverAdapter.PASS);
@@ -44,10 +51,12 @@ public class TableDefinitions
 	    	ResultSet rs = stmt.executeQuery(query);
 	    	ResultSetMetaData rsmd = rs.getMetaData();
 	    	
+	    	TableDefinition td = new TableDefinition();
 	    	for(int i = 0; i < rsmd.getColumnCount(); i++)
 	    	{
-	    		td.addColumnAndType(rsmd.getColumnLabel(i+1), rsmd.getColumnClassName(i+1));
+	    		td.addColumnMetadata(rsmd.getColumnLabel(i+1), rsmd.getColumnClassName(i+1));
 	    	}
+	    	
 	    	while(rs.next())
 	    	{
 	    		System.out.println(rs.getRow());
@@ -56,7 +65,6 @@ public class TableDefinitions
 	    			Holder h = td.getHolder(s);
 	    			System.out.println(h.getColumnName() + " " + h.callConversion(rs));
 	    		}
-	    		System.out.println();
 	    	}
 		} catch (SQLException e) {
 		e.printStackTrace();
@@ -64,6 +72,12 @@ public class TableDefinitions
 		finally {
 			conn.close();
 		}
-		return td;
+		return tds;
 	}
+	
+	public static String getTableAndDatabase(String s)
+	{
+		return s.split("_", 2)[1];
+	}
+	
 }

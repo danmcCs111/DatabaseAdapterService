@@ -11,10 +11,15 @@ public class TableDefinition
 	private HashMap<String, Holder> tableColumnAndType = new HashMap<String, Holder>();
 	private ArrayList<String> tableColumnKeySet = new ArrayList<String>();//orderedKeyset
 	
-	public void addColumnAndType(String columnLabel, String columnType)
+	public void addColumnMetadata(String columnLabel, String columnValue)
 	{
-		tableColumnKeySet.add(columnLabel);
-		tableColumnAndType.put(columnLabel, HolderParser.getHolder(columnType, columnLabel));
+		if(!tableColumnKeySet.contains(columnLabel))
+		{
+			tableColumnKeySet.add(columnLabel);
+			System.out.println("**Metadata** " + columnLabel + " --- "  + columnValue);
+			tableColumnAndType.put(columnLabel, HolderParser.getHolderFromDbType(columnValue, columnLabel));
+		}
+		
 	}
 	
 	public ArrayList<String> getTableColumnsKeySet()
@@ -22,8 +27,19 @@ public class TableDefinition
 		return tableColumnKeySet;
 	}
 	
-	public Holder getHolder(String columnNameKey)
+	public Holder getHolder(String columnFieldName)
 	{
-		return tableColumnAndType.get(columnNameKey);
+		return tableColumnAndType.get(columnFieldName);
+	}
+	
+	@Override
+	public String toString()
+	{
+		StringBuilder sb = new StringBuilder();
+		for(String tc : tableColumnKeySet)
+		{
+			sb.append(tc + " ");
+		}
+		return sb.toString();
 	}
 }
