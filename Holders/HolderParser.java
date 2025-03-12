@@ -1,8 +1,8 @@
 package Holders;
 
 import java.lang.reflect.InvocationTargetException;
-import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 
 public class HolderParser 
@@ -16,7 +16,7 @@ public class HolderParser
 	
 	public static HashMap<String, Class<?>> databaseClassTypeAndHolder =  new HashMap<String, Class<?>>();
 	static {
-		databaseClassTypeAndHolder.put(Timestamp.class.getName(), DateHolder.class);
+		databaseClassTypeAndHolder.put(Timestamp.class.getName(), TimestampHolder.class);
 		databaseClassTypeAndHolder.put(Date.class.getName(), DateHolder.class);
 		databaseClassTypeAndHolder.put(Integer.class.getName(), IntegerHolder.class);
 		databaseClassTypeAndHolder.put(String.class.getName(), StringHolder.class);
