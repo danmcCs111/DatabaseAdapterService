@@ -7,6 +7,7 @@ public class HolderToXml
 	public static String holdersToXml(ArrayList<ArrayList<Holder>> holders)
 	{
 		StringBuilder sb = new StringBuilder();
+		sb.append("<ResultSet>" + "\n");
 		for(ArrayList<Holder> hlds : holders)
 		{
 			for(Holder h : hlds)
@@ -19,8 +20,9 @@ public class HolderToXml
 				sb.append("</" + tagName + ">");
 				sb.append("\n");
 			}
-			sb.append("\n\n");
+			sb.append("\n");
 		}
+		sb.append("</ResultSet>");
 		return sb.toString();
 	}
 }

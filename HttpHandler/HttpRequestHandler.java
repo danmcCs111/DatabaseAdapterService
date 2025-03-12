@@ -28,7 +28,7 @@ public class HttpRequestHandler implements HttpHandler
 	{
 		Headers h = exchange.getRequestHeaders();
 		InputStream is = exchange.getRequestBody();
-		
+		String responseXml = "";
 		String result = readFromInputStreamToString(is);
 		
 		String response = "This is the response " + "\n";
@@ -38,12 +38,14 @@ public class HttpRequestHandler implements HttpHandler
 		if(isQuery)
 		{
 			ArrayList<ArrayList<Holder>> holders = executeQuery(result);
-			System.out.println(HolderToXml.holdersToXml(holders));
+			responseXml = HolderToXml.holdersToXml(holders);
+			System.out.println(responseXml);
 		}
 		
-		exchange.sendResponseHeaders(200, response.length());
+		exchange.sendResponseHeaders(200, response.length() + responseXml.length());
 		OutputStream os = exchange.getResponseBody();
 		os.write(response.getBytes());
+		os.write(responseXml.getBytes());
 		os.close();
 	}
 	

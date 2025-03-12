@@ -34,7 +34,6 @@ public class DriverAdapter
 		try {
 	    	conn = DriverManager.getConnection(DB_URL, USER, PASS);
 	    	retHolders = QueryExecutionService.collectResults(query);
-	    	
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
