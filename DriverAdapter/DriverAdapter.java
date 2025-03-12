@@ -27,7 +27,7 @@ public class DriverAdapter
 		listenHttp();
 	}
 	
-	public static ArrayList<ArrayList<Holder>>  callSelect(String query) 
+	public static ArrayList<ArrayList<Holder>> callSelect(String query) 
 	{
 		Connection conn = null;
 		ArrayList<ArrayList<Holder>> retHolders = null;
