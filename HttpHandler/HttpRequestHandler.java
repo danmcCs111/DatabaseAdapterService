@@ -17,9 +17,10 @@ public class HttpRequestHandler implements HttpHandler
 		String response = "This is the response " + "\n";
 		for(String key : h.keySet())
 		{
+			response += "[KEY] " + key + " ---> ";
 			List<String> headers = h.get(key);
 			for(String s : headers)
-				response += s + "\n";
+				response += "[VALUE] " + s + "\n";
 		}
 		exchange.sendResponseHeaders(200, response.length());
 		OutputStream os = exchange.getResponseBody();
