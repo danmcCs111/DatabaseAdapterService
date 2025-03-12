@@ -21,16 +21,16 @@ public class DriverAdapter
 	
 	public static void main(String [] args)
 	{
-		callSelect();
+		callSelect(VideoSelect.SELECT_SQL);
 		listenHttp();
 	}
 	
-	public static void callSelect() 
+	public static void callSelect(String query) 
 	{
 		Connection conn = null;
 		try {
 	    	conn = DriverManager.getConnection(DB_URL, USER, PASS);
-	    	TableDefinitions.collectTableDefinition(VideoSelect.SELECT_SQL);
+	    	TableDefinitions.collectTableDefinition(query);
 	    	
 		} catch (SQLException e) {
 			e.printStackTrace();
