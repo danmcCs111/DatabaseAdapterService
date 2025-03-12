@@ -37,8 +37,7 @@ public class HttpRequestHandler implements HttpHandler
 		boolean isQuery = isQuery(h);
 		if(isQuery)
 		{
-			ArrayList<Holder> holders = executeQuery(result);
-			//TODO add to response in format maybe json
+			ArrayList<ArrayList<Holder>> holders = executeQuery(result);
 			System.out.println(HolderToXml.holdersToXml(holders));
 		}
 		
@@ -58,7 +57,7 @@ public class HttpRequestHandler implements HttpHandler
 			return false;
 	}
 	
-	private static ArrayList<Holder> executeQuery(String query)
+	private static ArrayList<ArrayList<Holder>> executeQuery(String query)
 	{
 		return DriverAdapter.callSelect(query);
 	}

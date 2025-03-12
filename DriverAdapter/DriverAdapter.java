@@ -27,10 +27,10 @@ public class DriverAdapter
 		listenHttp();
 	}
 	
-	public static ArrayList<Holder> callSelect(String query) 
+	public static ArrayList<ArrayList<Holder>>  callSelect(String query) 
 	{
 		Connection conn = null;
-		ArrayList<Holder> retHolders = null;
+		ArrayList<ArrayList<Holder>> retHolders = null;
 		try {
 	    	conn = DriverManager.getConnection(DB_URL, USER, PASS);
 	    	retHolders = QueryExecutionService.collectResults(query);

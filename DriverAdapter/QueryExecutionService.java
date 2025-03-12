@@ -12,9 +12,11 @@ import Holders.Holder;
 
 public class QueryExecutionService 
 {
-	public static ArrayList<Holder> collectResults(String query) throws SQLException
+	public static ArrayList<ArrayList<Holder>> collectResults(String query) throws SQLException
 	{
-		ArrayList<Holder> retHolders = new ArrayList<Holder>();
+		ArrayList<ArrayList<Holder>> retHolders = new ArrayList<ArrayList<Holder>>();
+		ArrayList<Holder> retHldrs = new ArrayList<Holder>();
+		
 		Connection conn = null;
 		try {
 	    	conn = DriverManager.getConnection(DriverAdapter.DB_URL, DriverAdapter.USER, DriverAdapter.PASS);
@@ -30,13 +32,16 @@ public class QueryExecutionService
 	    	
 	    	while(rs.next())
 	    	{
+	    		TableDefinition tdC = td.cloneTableDefinition();
+	    		retHldrs = new ArrayList<Holder>();
 	    		System.out.println(rs.getRow());
-	    		for(String s : td.getTableColumnsKeySet())
+	    		for(String s : tdC.getTableColumnsKeySet())
 	    		{
-	    			Holder h = td.getHolder(s);
-	    			retHolders.add(h);
+	    			Holder h = tdC.getHolder(s);
+	    			retHldrs.add(h);
 	    			System.out.println(h.getColumnName() + " " + h.callConversion(rs) + " " + h.getClassType().getName());
 	    		}
+	    		retHolders.add(retHldrs);
 	    	}
 	    	System.out.println();
 		} catch (SQLException e) {

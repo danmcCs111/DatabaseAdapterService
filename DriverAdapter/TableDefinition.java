@@ -11,6 +11,11 @@ public class TableDefinition
 	private HashMap<String, Holder> tableColumnAndType = new HashMap<String, Holder>();
 	private ArrayList<String> tableColumnKeySet = new ArrayList<String>();//orderedKeyset
 	
+	public TableDefinition cloneTableDefinition()
+	{
+		return addAllColumnMetadata(this);
+	}
+	
 	public void addColumnMetadata(String columnLabel, String columnValue)
 	{
 		if(!tableColumnKeySet.contains(columnLabel))
@@ -20,6 +25,17 @@ public class TableDefinition
 			tableColumnAndType.put(columnLabel, HolderParser.getHolderFromDbType(columnValue, columnLabel));
 		}
 		
+	}
+	
+	protected TableDefinition addAllColumnMetadata(TableDefinition td)
+	{
+		TableDefinition tdNew = new TableDefinition();
+		for(String key : tableColumnAndType.keySet())
+		{
+			String val = tableColumnAndType.get(key).getClassType().getName();
+			tdNew.addColumnMetadata(key, val);
+		}
+		return tdNew;
 	}
 	
 	public ArrayList<String> getTableColumnsKeySet()
