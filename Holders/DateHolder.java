@@ -22,7 +22,7 @@ public class DateHolder implements Holder
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return this.ret;
+		return this.ret.getTime();
 	}
 	
 	public Date getReturnValue()
@@ -40,6 +40,12 @@ public class DateHolder implements Holder
 	public String getReturnValueString() 
 	{
 		return this.ret.toString();
+	}
+
+	@Override
+	public Class<?> getClassType() 
+	{
+		return Date.class;
 	}
 
 }

@@ -41,4 +41,10 @@ public class IntegerHolder implements Holder
 		return this.ret + "";
 	}
 
+	@Override
+	public Class<?> getClassType() 
+	{
+		return Integer.class;
+	}
+
 }

@@ -30,7 +30,7 @@ public class DriverAdapter
 		Connection conn = null;
 		try {
 	    	conn = DriverManager.getConnection(DB_URL, USER, PASS);
-	    	TableDefinitions.collectTableDefinition(query);
+	    	QueryExecutionService.collectResults(query);
 	    	
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -41,4 +41,10 @@ public class StringHolder implements Holder
 		return this.ret;
 	}
 
+	@Override
+	public Class<?> getClassType() 
+	{
+		return String.class;
+	}
+
 }
