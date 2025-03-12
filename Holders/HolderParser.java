@@ -9,13 +9,15 @@ public class HolderParser
 {
 	public static Class<?> [] holders = new Class<?>[] {
 			Timestamp.class,
+			Date.class,
 			Integer.class,
 			String.class
 	};
 	
 	public static HashMap<String, Class<?>> databaseClassTypeAndHolder =  new HashMap<String, Class<?>>();
 	static {
-		databaseClassTypeAndHolder.put(Timestamp.class.getName(), DateHolder.class);//TODO multiple?
+		databaseClassTypeAndHolder.put(Timestamp.class.getName(), DateHolder.class);
+		databaseClassTypeAndHolder.put(Date.class.getName(), DateHolder.class);
 		databaseClassTypeAndHolder.put(Integer.class.getName(), IntegerHolder.class);
 		databaseClassTypeAndHolder.put(String.class.getName(), StringHolder.class);
 	}
