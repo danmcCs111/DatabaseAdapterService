@@ -34,11 +34,13 @@ public class QueryExecutionService
 	    		for(String s : td.getTableColumnsKeySet())
 	    		{
 	    			Holder h = td.getHolder(s);
-	    			System.out.println(h.getColumnName() + " " + h.callConversion(rs) + " " + h.getClassType().toString());
+	    			retHolders.add(h);
+	    			System.out.println(h.getColumnName() + " " + h.callConversion(rs) + " " + h.getClassType().getName());
 	    		}
 	    	}
+	    	System.out.println();
 		} catch (SQLException e) {
-		e.printStackTrace();
+			e.printStackTrace();
 		}
 		finally {
 			conn.close();

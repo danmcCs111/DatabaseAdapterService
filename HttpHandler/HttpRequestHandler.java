@@ -15,6 +15,7 @@ import com.sun.net.httpserver.HttpHandler;
 
 import DriverAdapter.DriverAdapter;
 import Holders.Holder;
+import Holders.HolderToXml;
 
 public class HttpRequestHandler implements HttpHandler 
 {
@@ -38,6 +39,7 @@ public class HttpRequestHandler implements HttpHandler
 		{
 			ArrayList<Holder> holders = executeQuery(result);
 			//TODO add to response in format maybe json
+			System.out.println(HolderToXml.holdersToXml(holders));
 		}
 		
 		exchange.sendResponseHeaders(200, response.length());

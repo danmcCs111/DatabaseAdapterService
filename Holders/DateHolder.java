@@ -39,7 +39,7 @@ public class DateHolder implements Holder
 	@Override
 	public String getReturnValueString() 
 	{
-		return this.ret.toString();
+		return this.ret.getTime() + "";
 	}
 
 	@Override
