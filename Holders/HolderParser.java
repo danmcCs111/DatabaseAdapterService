@@ -2,7 +2,7 @@ package Holders;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Timestamp;
-import java.util.Date;
+import java.sql.Date;
 import java.util.HashMap;
 
 public class HolderParser 
