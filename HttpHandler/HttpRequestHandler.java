@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,6 +14,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import DriverAdapter.DriverAdapter;
+import Holders.Holder;
 
 public class HttpRequestHandler implements HttpHandler 
 {
@@ -34,7 +36,8 @@ public class HttpRequestHandler implements HttpHandler
 		boolean isQuery = isQuery(h);
 		if(isQuery)
 		{
-			executeQuery(result);
+			ArrayList<Holder> holders = executeQuery(result);
+			//TODO add to response in format maybe json
 		}
 		
 		exchange.sendResponseHeaders(200, response.length());
@@ -53,9 +56,9 @@ public class HttpRequestHandler implements HttpHandler
 			return false;
 	}
 	
-	private void executeQuery(String query)
+	private static ArrayList<Holder> executeQuery(String query)
 	{
-		DriverAdapter.callSelect(query);
+		return DriverAdapter.callSelect(query);
 	}
 	
 	private static String readFromInputStreamToString(InputStream is)

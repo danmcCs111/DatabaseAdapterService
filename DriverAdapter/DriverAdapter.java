@@ -5,9 +5,11 @@ import java.net.InetSocketAddress;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.sun.net.httpserver.HttpServer;
 
+import Holders.Holder;
 import HttpHandler.HttpRequestHandler;
 
 public class DriverAdapter 
@@ -25,12 +27,13 @@ public class DriverAdapter
 		listenHttp();
 	}
 	
-	public static void callSelect(String query) 
+	public static ArrayList<Holder> callSelect(String query) 
 	{
 		Connection conn = null;
+		ArrayList<Holder> retHolders = null;
 		try {
 	    	conn = DriverManager.getConnection(DB_URL, USER, PASS);
-	    	QueryExecutionService.collectResults(query);
+	    	retHolders = QueryExecutionService.collectResults(query);
 	    	
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -42,6 +45,7 @@ public class DriverAdapter
 				e.printStackTrace();
 			}
 		}
+		return retHolders;
 	}
 	
 	public static void listenHttp()
