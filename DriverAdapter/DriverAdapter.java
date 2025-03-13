@@ -23,7 +23,6 @@ public class DriverAdapter
 	
 	public static void main(String [] args)
 	{
-		callSelect(VideoSelect.SELECT_SQL);
 		listenHttp();
 	}
 	
