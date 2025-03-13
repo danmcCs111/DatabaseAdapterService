@@ -16,5 +16,4 @@ queries use metadata to determine their meta data from the apps gather table inf
 
 ![image](https://github.com/user-attachments/assets/c759a4b2-8b21-40a7-8d23-ffa5389a6183)
 
-
-![test_server_request_response](https://github.com/user-attachments/assets/0b08eff9-f52c-478c-8664-2fb529ea16ac)
+![database query tool](https://github.com/user-attachments/assets/4fd3266a-e130-4ffc-8ea1-7c290ab91fa9)
