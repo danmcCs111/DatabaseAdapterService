@@ -18,7 +18,7 @@ public class HolderToXml
 				String value = h.getReturnValueString();
 				String classType = h.getClassType().getName();
 				sb.append("<" + tagName + " classType=" + '"' + classType + '"' + ">");
-				sb.append('"' + value + '"');
+				sb.append(value);
 				sb.append("</" + tagName + ">");
 				sb.append("\n");
 			}
