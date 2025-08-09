@@ -33,6 +33,7 @@ public class TableDefinition
 		for(String key : tableColumnAndType.keySet())
 		{
 			String val = tableColumnAndType.get(key).getClassType().getName();
+			System.out.println("value type: " + val);
 			tdNew.addColumnMetadata(key, val);
 		}
 		return tdNew;

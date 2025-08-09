@@ -15,7 +15,7 @@ import HttpHandler.HttpRequestHandler;
 public class DriverAdapter 
 {
 	public static String 
-		DB_URL = "jdbc:mysql://localhost/videodatabase",
+		DB_URL = "jdbc:mysql://localhost/WeatherDatabase",
 		USER = "newuser",
 		PASS = "free-12345+";
 	private static int 
@@ -48,16 +48,14 @@ public class DriverAdapter
 	
 	public static void listenHttp()
 	{
-		{
-			try {
-				 HttpServer server = HttpServer.create(new InetSocketAddress(PORT_NUMBER), 0);
-		        server.createContext("/", new HttpRequestHandler());
-		        server.setExecutor(null); // Use the default executor
-		        server.start();
-		        System.out.println("Server is running on port " + PORT_NUMBER);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		try {
+			 HttpServer server = HttpServer.create(new InetSocketAddress(PORT_NUMBER), 0);
+	        server.createContext("/", new HttpRequestHandler());
+	        server.setExecutor(null); // Use the default executor
+	        server.start();
+	        System.out.println("Server is running on port " + PORT_NUMBER);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }

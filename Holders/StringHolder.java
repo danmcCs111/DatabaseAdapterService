@@ -21,7 +21,9 @@ public class StringHolder implements Holder
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return this.ret;
+		return (this.ret == null)
+				? null
+				: this.ret;
 	}
 	
 	public String getReturnValue()

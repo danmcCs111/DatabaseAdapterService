@@ -22,7 +22,9 @@ public class TimestampHolder implements Holder
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return this.ret.getTime();
+		return (this.ret == null)
+				? null
+				: this.ret.getTime();
 	}
 	
 	public Timestamp getReturnValue()
