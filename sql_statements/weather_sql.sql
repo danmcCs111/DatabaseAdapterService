@@ -13,6 +13,7 @@ CREATE TABLE WeatherDatabase.WeatherReading
         SkyCover_WeatherReading_WeatherDatabase int,
         HeatIndex_WeatherReading_WeatherDatabase int,
         Dewpoint_WeatherReading_WeatherDatabase int,
+        SurfaceWind_WeatherReading_WeatherDatabase varchar(255),
         InsertDate_WeatherReading_WeatherDatabase timestamp
 );
 
