@@ -21,26 +21,20 @@ public class HttpRequestHandler implements HttpHandler
 {
 	private static final String 
 		REQUEST_TYPE_HEADER_KEY = "Get-request-type",
-		QUERY_TYPE = "Query";
+		QUERY_TYPE = "Query",
+		UPDATE_TYPE = "Update";
 	
 	@Override
 	public void handle(HttpExchange exchange) throws IOException 
 	{
 		Headers h = exchange.getRequestHeaders();
 		InputStream is = exchange.getRequestBody();
-		String responseXml = "";
 		String result = readFromInputStreamToString(is);
 		
 		String response = "This is the response " + "\n";
 		response += getRequestHeaderAsString(h);
-		
-		boolean isQuery = isQuery(h);
-		if(isQuery)
-		{
-			ArrayList<ArrayList<Holder>> holders = executeQuery(result);
-			responseXml = HolderToXml.holdersToXml(holders);
-			System.out.println(responseXml);
-		}
+
+		String responseXml = execute(h, result);
 		
 		exchange.sendResponseHeaders(200, response.length() + responseXml.length());
 		OutputStream os = exchange.getResponseBody();
@@ -49,19 +43,34 @@ public class HttpRequestHandler implements HttpHandler
 		os.close();
 	}
 	
-	private static boolean isQuery(Headers h)
+	private static String execute(Headers h, String result)
 	{
+		String responseXml = "";
 		if(h.containsKey(REQUEST_TYPE_HEADER_KEY))
 		{
-			return h.get(REQUEST_TYPE_HEADER_KEY).contains(QUERY_TYPE);
+			if(h.get(REQUEST_TYPE_HEADER_KEY).contains(QUERY_TYPE))
+			{
+				ArrayList<ArrayList<Holder>> holders = executeQuery(result);
+				responseXml = HolderToXml.holdersToXml(holders);
+				System.out.println(responseXml);
+			}
+			else if(h.get(REQUEST_TYPE_HEADER_KEY).contains(UPDATE_TYPE))
+			{
+				executeUpdate(result);
+			}
 		}
-		else 
-			return false;
+		
+		return responseXml;
 	}
 	
 	private static ArrayList<ArrayList<Holder>> executeQuery(String query)
 	{
 		return DriverAdapter.callSelect(query);
+	}
+	
+	private static void executeUpdate(String query)
+	{
+		DriverAdapter.executeInsertUpdate(query);
 	}
 	
 	private static String readFromInputStreamToString(InputStream is)

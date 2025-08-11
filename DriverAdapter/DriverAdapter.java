@@ -5,6 +5,7 @@ import java.net.InetSocketAddress;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import com.sun.net.httpserver.HttpServer;
@@ -44,6 +45,36 @@ public class DriverAdapter
 			}
 		}
 		return retHolders;
+	}
+	
+	public static void executeInsertUpdate(String query)
+	{
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection(DriverAdapter.DB_URL, DriverAdapter.USER, DriverAdapter.PASS);
+			Statement stmt = conn.createStatement();
+			con:
+			for(String q : query.split(";"))
+			{
+				System.out.println(q);
+				try {
+					stmt.executeUpdate(q);
+				}catch(SQLException e) {
+					System.out.println("error executing: " + q);
+					continue con;
+				}
+			}
+			System.out.println("execute update");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public static void listenHttp()
