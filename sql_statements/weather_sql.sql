@@ -4,7 +4,8 @@ create database WeatherDatabase;
 
 CREATE TABLE WeatherDatabase.WeatherReading
 (
-        Date_WeatherReading_WeatherDatabase timestamp PRIMARY KEY,
+        Date_WeatherReading_WeatherDatabase timestamp,
+        Location_WeatherReading_WeatherDatabase varchar(12),
         Temperature_WeatherReading_WeatherDatabase int,
         Rain_WeatherReading_WeatherDatabase int,
         Thunder_WeatherReading_WeatherDatabase int,
@@ -14,7 +15,8 @@ CREATE TABLE WeatherDatabase.WeatherReading
         HeatIndex_WeatherReading_WeatherDatabase int,
         Dewpoint_WeatherReading_WeatherDatabase int,
         SurfaceWind_WeatherReading_WeatherDatabase varchar(255),
-        InsertDate_WeatherReading_WeatherDatabase timestamp
+        InsertDate_WeatherReading_WeatherDatabase timestamp,
+        PRIMARY KEY (Location_WeatherReading_WeatherDatabase, Date_WeatherReading_WeatherDatabase)
 );
 
 select * from WeatherDatabase.WeatherReading;
