@@ -53,6 +53,7 @@ public class DriverAdapter
 		try {
 			conn = DriverManager.getConnection(DriverAdapter.DB_URL, DriverAdapter.USER, DriverAdapter.PASS);
 			Statement stmt = conn.createStatement();
+			System.out.println(query);
 			con:
 			for(String q : query.split(";"))
 			{
