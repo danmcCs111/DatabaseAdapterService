@@ -7,11 +7,11 @@ use videodatabase;
 commit;
 **/
 CREATE TABLE videodatabase.Video (
-    VideoId_Video_VideoDatabase int PRIMARY KEY,
+    VideoId_Video_VideoDatabase int NOT NULL AUTO_INCREMENT,
     VideoName_Video_VideoDatabase VARCHAR(300),
-    VideoPath_Video_VideoDatabase VARCHAR(500),
-    VideoExtension_Video_VideoDatabase VARCHAR(10),
-    InsertDate_Video_VideoDatabase timestamp
+    VideoUrl_Video_VideoDatabase VARCHAR(500),
+    InsertDate_Video_VideoDatabase timestamp,
+	PRIMARY KEY (VideoId_Video_VideoDatabase)
 );
 
 commit;
