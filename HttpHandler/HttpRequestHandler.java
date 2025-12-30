@@ -22,7 +22,8 @@ public class HttpRequestHandler implements HttpHandler
 	private static final String 
 		REQUEST_TYPE_HEADER_KEY = "Get-request-type",
 		QUERY_TYPE = "Query",
-		UPDATE_TYPE = "Update";
+		UPDATE_TYPE = "Update",
+		INSERT_TYPE = "Insert";
 	
 	@Override
 	public void handle(HttpExchange exchange) throws IOException 
@@ -54,7 +55,8 @@ public class HttpRequestHandler implements HttpHandler
 				responseXml = HolderToXml.holdersToXml(holders);
 				System.out.println(responseXml);
 			}
-			else if(h.get(REQUEST_TYPE_HEADER_KEY).contains(UPDATE_TYPE))
+			else if(h.get(REQUEST_TYPE_HEADER_KEY).contains(UPDATE_TYPE) || 
+					h.get(REQUEST_TYPE_HEADER_KEY).contains(INSERT_TYPE))
 			{
 				executeUpdate(result);
 			}
