@@ -1,7 +1,3 @@
-create database videodatabase;
-
-commit;
-
 use videodatabase;
 /**drop table videodatabase.Video;
 commit;

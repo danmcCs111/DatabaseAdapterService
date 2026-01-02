@@ -1,6 +1,3 @@
-create database gamedatabase;
-commit;
-
 use gamedatabase;
 
 CREATE TABLE gamedatabase.Game (

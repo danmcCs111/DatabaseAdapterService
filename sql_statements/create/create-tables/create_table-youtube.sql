@@ -1,5 +1,3 @@
-create database videodatabase;
-commit;
 
 use videodatabase;
 
