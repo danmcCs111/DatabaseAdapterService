@@ -1,7 +1,5 @@
 use videodatabase;
-/**drop table videodatabase.Video;
-commit;
-**/
+
 CREATE TABLE videodatabase.Video (
     VideoId_Video_VideoDatabase int NOT NULL AUTO_INCREMENT,
     VideoName_Video_VideoDatabase VARCHAR(300),

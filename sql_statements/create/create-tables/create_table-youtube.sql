@@ -1,4 +1,3 @@
-
 use videodatabase;
 
 CREATE TABLE videodatabase.videoYoutube (
