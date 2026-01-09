@@ -1,2 +1,3 @@
 #!/bin/bash
-java -jar DatabaseAdapterService.jar
+source ./echoArgs.sh
+java -jar DatabaseAdapterService.jar $dbUrl $user $pass $port

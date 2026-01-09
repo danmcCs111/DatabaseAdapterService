@@ -19,7 +19,7 @@ public class QueryExecutionService
 		
 		Connection conn = null;
 		try {
-	    	conn = DriverManager.getConnection(DriverAdapter.DB_URL, DriverAdapter.USER, DriverAdapter.PASS);
+	    	conn = DriverManager.getConnection(DriverAdapter.dbUrl, DriverAdapter.user, DriverAdapter.pass);
 	    	Statement stmt = conn.createStatement();
 	    	ResultSet rs = stmt.executeQuery(query);
 	    	ResultSetMetaData rsmd = rs.getMetaData();

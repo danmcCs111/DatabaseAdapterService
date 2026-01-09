@@ -1,14 +1,14 @@
 package DriverAdapter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import Holders.Holder;
 import Holders.HolderParser;
 
 public class TableDefinition 
 {
-	private HashMap<String, Holder> tableColumnAndType = new HashMap<String, Holder>();
+	private LinkedHashMap<String, Holder> tableColumnAndType = new LinkedHashMap<String, Holder>();
 	private ArrayList<String> tableColumnKeySet = new ArrayList<String>();//orderedKeyset
 	
 	public TableDefinition cloneTableDefinition()

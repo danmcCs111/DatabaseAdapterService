@@ -1,0 +1,4 @@
+DB_URL=jdbc:mysql://localhost/VideoDatabase
+USER=newuser
+PASS=free-12345+
+PORT_NUMBER=8000

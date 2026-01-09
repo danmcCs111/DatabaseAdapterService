@@ -16,14 +16,29 @@ import HttpHandler.HttpRequestHandler;
 public class DriverAdapter 
 {
 	public static String 
-		DB_URL = "jdbc:mysql://localhost/WeatherDatabase",
-		USER = "newuser",
-		PASS = "free-12345+";
-	private static int 
-		PORT_NUMBER = 8000;
+		dbUrl,
+		user,
+		pass;
+	public static int portNumber;
 	
 	public static void main(String [] args)
 	{
+		if(args.length != 4)
+		{
+			System.out.println(
+					"Enter options \n" +
+					"database url \n" +
+					"user \n" +
+					"password \n" +
+					"port number \n"
+			);
+			return;
+		}
+		dbUrl = args[0];
+		user = args[1];
+		pass = args[2];
+		portNumber = Integer.parseInt(args[3]);
+		
 		listenHttp();
 	}
 	
@@ -32,7 +47,7 @@ public class DriverAdapter
 		Connection conn = null;
 		ArrayList<ArrayList<Holder>> retHolders = null;
 		try {
-	    	conn = DriverManager.getConnection(DB_URL, USER, PASS);
+	    	conn = DriverManager.getConnection(dbUrl, user, pass);
 	    	retHolders = QueryExecutionService.collectResults(query);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -51,7 +66,7 @@ public class DriverAdapter
 	{
 		Connection conn = null;
 		try {
-			conn = DriverManager.getConnection(DriverAdapter.DB_URL, DriverAdapter.USER, DriverAdapter.PASS);
+			conn = DriverManager.getConnection(dbUrl, user, pass);
 			Statement stmt = conn.createStatement();
 			System.out.println(query);
 			con:
@@ -81,11 +96,11 @@ public class DriverAdapter
 	public static void listenHttp()
 	{
 		try {
-			 HttpServer server = HttpServer.create(new InetSocketAddress(PORT_NUMBER), 0);
+			 HttpServer server = HttpServer.create(new InetSocketAddress(portNumber), 0);
 	        server.createContext("/", new HttpRequestHandler());
 	        server.setExecutor(null); // Use the default executor
 	        server.start();
-	        System.out.println("Server is running on port " + PORT_NUMBER);
+	        System.out.println("Server is running on port " + portNumber);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

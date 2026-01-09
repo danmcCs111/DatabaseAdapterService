@@ -1,1 +1,1 @@
-java -jar DatabaseAdapterService.jar
+start runDatabase.sh
