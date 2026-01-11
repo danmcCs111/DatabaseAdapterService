@@ -1,5 +1,6 @@
 #!/bin/bash
 cd "$(dirname "$0")"
+./printDirectory.bat
 db_file=`cat dirArg.txt | sed 's/ $//g'`"\\"
 source ./echoArgs.sh
 source ./java-class-path.sh
