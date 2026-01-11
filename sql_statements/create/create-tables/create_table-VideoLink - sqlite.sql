@@ -1,0 +1,6 @@
+CREATE TABLE Video (
+    VideoId_Video_VideoDatabase INTEGER PRIMARY KEY,
+    VideoName_Video_VideoDatabase VARCHAR(300),
+    VideoUrl_Video_VideoDatabase VARCHAR(500),
+    InsertDate_Video_VideoDatabase timestamp
+);
