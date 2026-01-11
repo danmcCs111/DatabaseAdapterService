@@ -1,4 +1,6 @@
 DB_URL=jdbc:mysql://localhost/VideoDatabase
+DB_URL_SQLITE_PRE=jdbc:sqlite:
+DB_URL_SQLITE_POST=videodatabase.db
 USER=newuser
 PASS=free-12345+
 PORT_NUMBER=8000
