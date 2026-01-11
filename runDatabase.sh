@@ -1,9 +1,10 @@
 #!/bin/bash
 cd "$(dirname "$0")"
-db_file="$1"
+db_file=`cat dirArg.txt | sed 's/ $//g'`"\\"
 source ./echoArgs.sh
 source ./java-class-path.sh
 
+echo $db_file
 #mysql
 #java -cp "$java_database_cp" DriverAdapter.DriverAdapter $dbUrl $user $pass $port
 
