@@ -14,6 +14,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import DriverAdapter.DriverAdapter;
+import DriverAdapter.QueryExecutionService;
 import Holders.Holder;
 import Holders.HolderToXml;
 
@@ -67,12 +68,12 @@ public class HttpRequestHandler implements HttpHandler
 	
 	private static ArrayList<ArrayList<Holder>> executeQuery(String query)
 	{
-		return DriverAdapter.callSelect(query);
+		return QueryExecutionService.callSelect(query);
 	}
 	
 	private static void executeUpdate(String query)
 	{
-		DriverAdapter.executeInsertUpdate(query);
+		QueryExecutionService.executeInsertUpdate(query);
 	}
 	
 	private static String readFromInputStreamToString(InputStream is)

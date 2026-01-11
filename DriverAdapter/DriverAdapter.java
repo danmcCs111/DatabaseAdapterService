@@ -10,87 +10,43 @@ import java.util.ArrayList;
 
 import com.sun.net.httpserver.HttpServer;
 
-import Holders.Holder;
 import HttpHandler.HttpRequestHandler;
 
 public class DriverAdapter 
 {
 	public static String 
-		dbUrl,
-		user,
-		pass;
-	public static int portNumber;
+		dbUrl = null,
+		user = null,
+		pass = null;
+	public static int portNumber = -1;
 	
 	public static void main(String [] args)
 	{
-		if(args.length != 4)
+		if(args.length == 4)
+		{
+			dbUrl = args[0];
+			user = args[1];
+			pass = args[2];
+			portNumber = Integer.parseInt(args[3]);
+		}
+		else if(args.length == 1)
+		{
+			dbUrl = args[0];
+			portNumber = Integer.parseInt(args[1]);
+		}
+		else
 		{
 			System.out.println(
 					"Enter options \n" +
-					"database url \n" +
-					"user \n" +
-					"password \n" +
-					"port number \n"
-			);
-			return;
+					"[database url] (required) \n" +
+					"[user] \n" +
+					"[password] \n" +
+					"[port number] (required)\n"
+				);
+				return;
 		}
-		dbUrl = args[0];
-		user = args[1];
-		pass = args[2];
-		portNumber = Integer.parseInt(args[3]);
 		
 		listenHttp();
-	}
-	
-	public static ArrayList<ArrayList<Holder>> callSelect(String query) 
-	{
-		Connection conn = null;
-		ArrayList<ArrayList<Holder>> retHolders = null;
-		try {
-	    	conn = DriverManager.getConnection(dbUrl, user, pass);
-	    	retHolders = QueryExecutionService.collectResults(query);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return retHolders;
-	}
-	
-	public static void executeInsertUpdate(String query)
-	{
-		Connection conn = null;
-		try {
-			conn = DriverManager.getConnection(dbUrl, user, pass);
-			Statement stmt = conn.createStatement();
-			System.out.println(query);
-			con:
-			for(String q : query.split(";"))
-			{
-				System.out.println(q);
-				try {
-					stmt.executeUpdate(q);
-				}catch(SQLException e) {
-					System.out.println("error executing: " + q);
-					continue con;
-				}
-			}
-			System.out.println("execute update");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
 	}
 	
 	public static void listenHttp()

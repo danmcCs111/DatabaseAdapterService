@@ -19,7 +19,7 @@ public class QueryExecutionService
 		
 		Connection conn = null;
 		try {
-	    	conn = DriverManager.getConnection(DriverAdapter.dbUrl, DriverAdapter.user, DriverAdapter.pass);
+			conn = getConnection();
 	    	Statement stmt = conn.createStatement();
 	    	ResultSet rs = stmt.executeQuery(query);
 	    	ResultSetMetaData rsmd = rs.getMetaData();
@@ -53,9 +53,68 @@ public class QueryExecutionService
 		return retHolders;
 	}
 	
+	public static ArrayList<ArrayList<Holder>> callSelect(String query) 
+	{
+		Connection conn = null;
+		ArrayList<ArrayList<Holder>> retHolders = null;
+		try {
+			conn = getConnection();
+	    	retHolders = QueryExecutionService.collectResults(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return retHolders;
+	}
+	
+	public static void executeInsertUpdate(String query)
+	{
+		Connection conn = null;
+		try {
+			conn = getConnection();
+			
+			Statement stmt = conn.createStatement();
+			System.out.println(query);
+			con:
+			for(String q : query.split(";"))
+			{
+				System.out.println(q);
+				try {
+					stmt.executeUpdate(q);
+				}catch(SQLException e) {
+					System.out.println("error executing: " + q);
+					continue con;
+				}
+			}
+			System.out.println("execute update");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	public static String getTableAndDatabase(String s)
 	{
 		return s.split("_", 2)[1];
+	}
+	
+	private static Connection getConnection() throws SQLException
+	{
+		return (DriverAdapter.user != null)
+				? DriverManager.getConnection(DriverAdapter.dbUrl, DriverAdapter.user, DriverAdapter.pass)
+				: DriverManager.getConnection(DriverAdapter.dbUrl);
 	}
 	
 }
