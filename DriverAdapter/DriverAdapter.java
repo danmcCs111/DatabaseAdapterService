@@ -29,7 +29,7 @@ public class DriverAdapter
 			pass = args[2];
 			portNumber = Integer.parseInt(args[3]);
 		}
-		else if(args.length == 1)
+		else if(args.length == 2)
 		{
 			dbUrl = args[0];
 			portNumber = Integer.parseInt(args[1]);
