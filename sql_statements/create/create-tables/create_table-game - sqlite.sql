@@ -1,10 +1,1 @@
-use gamedatabase;
-
-CREATE TABLE gamedatabase.Game (
-    GameTitle_Game_GameDatabase VARCHAR(300),
-	GameUrl_Game_GameDatabase VARCHAR(500),
-    InsertDate_Game_GameDatabase timestamp,
-    PRIMARY KEY (GameTitle_Game_GameDatabase)
-);
-
-commit;
+CREATE TABLE Game (GameTitle_Game_GameDatabase VARCHAR(300), GameUrl_Game_GameDatabase VARCHAR(500), InsertDate_Game_GameDatabase timestamp, PRIMARY KEY (GameTitle_Game_GameDatabase));
