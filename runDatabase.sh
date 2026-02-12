@@ -9,5 +9,15 @@ echo $db_file
 #mysql
 #java -cp "$java_database_cp" DriverAdapter.DriverAdapter $dbUrl $user $pass $port
 
-java -cp "$java_database_cp" DriverAdapter.DriverAdapter $dbUrlPre$db_file$dbUrlPost $port
+databases=(`ls ../SQLiteInstall/*.db`)
+dbs=""
+for d in ${databases[@]}
+do
+	dbs+=":"`echo $d | sed 's/..\/SQLiteInstall\///g'`
+done
+dbs=${dbs:1}
+
+echo $dbs
+
+java -cp "$java_database_cp" DriverAdapter.DriverAdapter $dbUrlPre$db_file $port $arg2
 
