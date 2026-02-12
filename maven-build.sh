@@ -1,7 +1,9 @@
 #!/bin/bash
 orgDir=`pwd`
+mvnDir=$1
+
 cd "$(dirname "$0")"
 
-mvn clean install dependency:copy-dependencies
+$mvnDir clean install dependency:copy-dependencies
 
 cd $orgDir

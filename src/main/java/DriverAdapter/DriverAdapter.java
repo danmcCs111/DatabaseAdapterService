@@ -1,5 +1,6 @@
 package DriverAdapter;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import com.sun.net.httpserver.HttpServer;
@@ -19,7 +20,7 @@ public class DriverAdapter
 	private static String 
 		regexAlias = "[a-zA-Z]*.db";
 	
-	public static void main(String [] args)
+	public static void main(String [] args) throws IOException
 	{
 		if(args.length == 4)
 		{
@@ -32,7 +33,7 @@ public class DriverAdapter
 		{
 			dbUrl = args[0];
 			portNumber = Integer.parseInt(args[1]);
-			databasePaths = args[2].split(":");
+			databasePaths = args[2].split(",");
 		}
 		else
 		{
@@ -47,11 +48,15 @@ public class DriverAdapter
 		}
 		
 		listenHttp();
-		System.out.println(System.getProperty("user.dir"));
 		
 		for(String db : databasePaths)
 		{
-			HttpRequestHandler.execute("ATTACH DATABASE '" + db + "' AS " + getDatabaseAlias(db) + ";");
+			File f = new File(db);
+			String dbPath = f.getCanonicalPath();
+			String alias = getDatabaseAlias(db);
+			System.out.println(dbPath + " " + alias);
+			
+			HttpRequestHandler.execute("ATTACH DATABASE '" + dbPath + "' AS " + alias + ";");
 		}
 	}
 	

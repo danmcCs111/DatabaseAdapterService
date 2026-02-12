@@ -13,11 +13,11 @@ databases=(`ls ../SQLiteInstall/*.db`)
 dbs=""
 for d in ${databases[@]}
 do
-	dbs+=":"`echo $d | sed 's/..\/SQLiteInstall\///g'`
+	dbs+=","`echo $d`
 done
 dbs=${dbs:1}
 
 echo $dbs
 
-java -cp "$java_database_cp" DriverAdapter.DriverAdapter $dbUrlPre$db_file $port $arg2
+java -cp "$java_database_cp" DriverAdapter.DriverAdapter $dbUrlPre$db_file $port $dbs
 
