@@ -19,5 +19,5 @@ dbs=${dbs:1}
 
 echo $dbs
 
-java -cp "$java_database_cp" DriverAdapter.DriverAdapter $dbUrlPre$db_file $port $dbs
+java -cp "$java_database_cp" DriverAdapter.DriverAdapter $dbUrlPre $port $dbs
 
