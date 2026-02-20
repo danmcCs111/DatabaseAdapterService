@@ -66,12 +66,17 @@ public class HttpRequestHandler implements HttpHandler
 		return responseXml;
 	}
 	
-	private static ArrayList<ArrayList<Holder>> executeQuery(String query)
+	public static ArrayList<ArrayList<Holder>> executeQuery(String query)
 	{
 		return QueryExecutionService.callSelect(query);
 	}
 	
-	private static void executeUpdate(String query)
+	public static void execute(String query)
+	{
+		QueryExecutionService.execute(query);
+	}
+	
+	public static void executeUpdate(String query)
 	{
 		QueryExecutionService.executeInsertUpdate(query);
 	}

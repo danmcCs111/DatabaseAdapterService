@@ -12,6 +12,8 @@ import Holders.Holder;
 
 public class QueryExecutionService 
 {
+	private static Connection conn;//1
+	
 	public static ArrayList<ArrayList<Holder>> collectResults(String query) throws SQLException
 	{
 		ArrayList<ArrayList<Holder>> retHolders = new ArrayList<ArrayList<Holder>>();
@@ -47,30 +49,44 @@ public class QueryExecutionService
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		finally {
-			conn.close();
-		}
 		return retHolders;
 	}
 	
 	public static ArrayList<ArrayList<Holder>> callSelect(String query) 
 	{
-		Connection conn = null;
 		ArrayList<ArrayList<Holder>> retHolders = null;
 		try {
-			conn = getConnection();
 	    	retHolders = QueryExecutionService.collectResults(query);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
 		return retHolders;
+	}
+	
+	public static void execute(String query)
+	{
+		Connection conn = null;
+		try {
+			conn = getConnection();
+			
+			Statement stmt = conn.createStatement();
+			System.out.println(query);
+			con:
+			for(String q : query.split(";"))
+			{
+				System.out.println(q);
+				try {
+					stmt.execute(q);
+				}catch(SQLException e) {
+					System.out.println("error executing: " + q);
+					e.printStackTrace();
+					continue con;
+				}
+			}
+			System.out.println("execute update");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static void executeInsertUpdate(String query)
@@ -96,13 +112,6 @@ public class QueryExecutionService
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
 	}
 	
 	public static String getTableAndDatabase(String s)
@@ -112,9 +121,13 @@ public class QueryExecutionService
 	
 	private static Connection getConnection() throws SQLException
 	{
-		return (DriverAdapter.user != null)
+		if(conn == null)
+		{
+			conn = (DriverAdapter.user != null)
 				? DriverManager.getConnection(DriverAdapter.dbUrl, DriverAdapter.user, DriverAdapter.pass)
 				: DriverManager.getConnection(DriverAdapter.dbUrl);
+		}
+		return conn;
 	}
 	
 }
