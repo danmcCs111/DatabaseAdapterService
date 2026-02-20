@@ -1,7 +1,16 @@
 #!/bin/bash
+typeOs=`uname`
+
 cd "$(dirname "$0")"
 source ./echoArgs.sh
-source ./java-class-path.sh
+
+if [[ "$typeOs" == "Linux" ]]
+then
+	
+	source ./java-class-path-linux.sh
+else
+	source ./java-class-path.sh
+fi
 
 #mysql
 #java -cp "$java_database_cp" DriverAdapter.DriverAdapter $dbUrl $user $pass $port
@@ -15,6 +24,7 @@ done
 dbs=${dbs:1}
 
 echo $dbs
+echo "$java_database_cp"
 
 java -cp "$java_database_cp" DriverAdapter.DriverAdapter $dbUrlPre $port $dbs
 
