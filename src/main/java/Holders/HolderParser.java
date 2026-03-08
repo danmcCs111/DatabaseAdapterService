@@ -11,6 +11,7 @@ public class HolderParser
 			Timestamp.class,
 			Date.class,
 			Integer.class,
+			Object.class,//Default as string...
 			String.class
 	};
 	
@@ -19,6 +20,7 @@ public class HolderParser
 		databaseClassTypeAndHolder.put(Timestamp.class.getName(), TimestampHolder.class);
 		databaseClassTypeAndHolder.put(Date.class.getName(), DateHolder.class);
 		databaseClassTypeAndHolder.put(Integer.class.getName(), IntegerHolder.class);
+		databaseClassTypeAndHolder.put(Object.class.getName(), StringHolder.class);//Default as string...
 		databaseClassTypeAndHolder.put(String.class.getName(), StringHolder.class);
 	}
 	

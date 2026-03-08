@@ -65,7 +65,6 @@ public class DriverAdapter
 		return StringUtility.getMatches(dbPath, regexAlias).get(0).replace(".db", "");
 	}
 	
-	@SuppressWarnings("restriction")
 	public static void listenHttp()
 	{
 		try {
