@@ -11,10 +11,10 @@ import Holders.Holder;
 public class QueryExecutionService 
 {
 	private static ArrayList<ConnectionResource> 
-		connections = new ArrayList<ConnectionResource>();//1
+		connections = new ArrayList<ConnectionResource>();
 	public static int
-		RETRY_SLEEP = 10000,//10 seconds * 3 -> 30 seconds wait.
-		RETRY_COUNT = 3,
+		RETRY_SLEEP = 10000,//10 seconds
+		RETRY_COUNT = 12, //10 * 12 = 120 seconds, 2minutes
 		NUMBER_OF_DATABASE_CONNECTIONS = 24,
 		NUMBER_OF_HTTP_CONNECTIONS = 150;
 	static {
