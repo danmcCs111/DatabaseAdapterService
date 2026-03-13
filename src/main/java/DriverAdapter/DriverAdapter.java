@@ -68,7 +68,8 @@ public class DriverAdapter
 	public static void listenHttp()
 	{
 		try {
-			HttpServer server = HttpServer.create(new InetSocketAddress(portNumber), 0);
+			HttpServer server = HttpServer.create(new InetSocketAddress(portNumber), 
+					QueryExecutionService.NUMBER_OF_HTTP_CONNECTIONS);
 	        server.createContext("/", new HttpRequestHandler());
 	        server.setExecutor(null); // Use the default executor
 	        server.start();

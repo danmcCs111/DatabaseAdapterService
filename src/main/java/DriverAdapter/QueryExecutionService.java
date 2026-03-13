@@ -1,7 +1,5 @@
 package DriverAdapter;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -12,17 +10,26 @@ import Holders.Holder;
 
 public class QueryExecutionService 
 {
-	private static Connection conn;//1
+	private static ArrayList<ConnectionResource> 
+		connections = new ArrayList<ConnectionResource>();//1
+	public static int
+		RETRY_SLEEP = 10000,//10 seconds * 3 -> 30 seconds wait.
+		RETRY_COUNT = 3,
+		NUMBER_OF_DATABASE_CONNECTIONS = 24,
+		NUMBER_OF_HTTP_CONNECTIONS = 150;
+	static {
+		initConnectionPool();
+	}
 	
 	public static ArrayList<ArrayList<Holder>> collectResults(String query) throws SQLException
 	{
 		ArrayList<ArrayList<Holder>> retHolders = new ArrayList<ArrayList<Holder>>();
 		ArrayList<Holder> retHldrs = new ArrayList<Holder>();
 		
-		Connection conn = null;
+		ConnectionResource conn = null;
 		try {
-			conn = getConnection();
-	    	Statement stmt = conn.createStatement();
+			conn = getConnection(RETRY_COUNT);
+	    	Statement stmt = conn.getConnection().createStatement();
 	    	ResultSet rs = stmt.executeQuery(query);
 	    	ResultSetMetaData rsmd = rs.getMetaData();
 	    	
@@ -46,6 +53,7 @@ public class QueryExecutionService
 	    		retHolders.add(retHldrs);
 	    	}
 	    	System.out.println();
+	    	conn.setRunningState(false);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -65,11 +73,11 @@ public class QueryExecutionService
 	
 	public static void execute(String query)
 	{
-		Connection conn = null;
+		ConnectionResource conn = null;
 		try {
-			conn = getConnection();
+			conn = getConnection(RETRY_COUNT);
 			
-			Statement stmt = conn.createStatement();
+			Statement stmt = conn.getConnection().createStatement();
 			System.out.println(query);
 			con:
 			for(String q : query.split(";"))
@@ -84,6 +92,7 @@ public class QueryExecutionService
 				}
 			}
 			System.out.println("execute update");
+			conn.setRunningState(false);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -91,11 +100,11 @@ public class QueryExecutionService
 	
 	public static void executeInsertUpdate(String query)
 	{
-		Connection conn = null;
+		ConnectionResource conn = null;
 		try {
-			conn = getConnection();
+			conn = getConnection(RETRY_COUNT);
 			
-			Statement stmt = conn.createStatement();
+			Statement stmt = conn.getConnection().createStatement();
 			System.out.println(query);
 			con:
 			for(String q : query.split(";"))
@@ -109,6 +118,7 @@ public class QueryExecutionService
 				}
 			}
 			System.out.println("execute update");
+			conn.setRunningState(false);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -119,15 +129,27 @@ public class QueryExecutionService
 		return s.split("_", 2)[1];
 	}
 	
-	private static Connection getConnection() throws SQLException
+	private static void initConnectionPool()
 	{
-		if(conn == null)
+		connections = new ArrayList<ConnectionResource>();
+		for(int i = 0; i < NUMBER_OF_DATABASE_CONNECTIONS; i++)
 		{
-			conn = (DriverAdapter.user != null)
-				? DriverManager.getConnection(DriverAdapter.dbUrl, DriverAdapter.user, DriverAdapter.pass)
-				: DriverManager.getConnection(DriverAdapter.dbUrl);
+			connections.add(new ConnectionResource());
 		}
-		return conn;
+	}
+	
+	private static ConnectionResource getConnection(int retryCount) throws SQLException
+	{
+		for(int i = 0; i < NUMBER_OF_DATABASE_CONNECTIONS; i++)
+		{
+			ConnectionResource cr = connections.get(i);
+			if(!cr.isRunning())
+			{
+				cr.setRunningState(true);
+				return cr;
+			}
+		}
+		return getConnection(--retryCount);
 	}
 	
 }
