@@ -1,1 +1,0 @@
-ALTER TABLE Video ADD HasUpdate_Video_VideoDatabase BOOLEAN NOT NULL DEFAULT 1;
