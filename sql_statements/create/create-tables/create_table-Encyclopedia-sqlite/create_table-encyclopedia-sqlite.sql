@@ -1,0 +1,1 @@
+CREATE TABLE Encyclopedia ( Id_Encyclopedia_EncyclopediaDatabase VARCHAR(15), Title_Encyclopedia_EncyclopediaDatabase VARCHAR(300), Url_Encyclopedia_EncyclopediaDatabase VARCHAR(500), InsertDate_Encyclopedia_EncyclopediaDatabase timestamp, PRIMARY KEY (Id_Encyclopedia_EncyclopediaDatabase));
