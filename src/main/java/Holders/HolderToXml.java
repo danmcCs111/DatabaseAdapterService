@@ -28,4 +28,27 @@ public class HolderToXml
 		sb.append("</ResultSet>");
 		return sb.toString();
 	}
+	
+	public static String holderToXml(ArrayList<Holder> holders)
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("<ResultSet>" + "\n");
+		
+		sb.append("<Result>");
+		sb.append("\n");
+		for(Holder h : holders)
+		{
+			String tagName = h.getColumnName();
+			String value = h.getReturnValueString();
+			String classType = h.getClassType().getName();
+			sb.append("<" + tagName + " classType=" + '"' + classType + '"' + ">");
+			sb.append(value);
+			sb.append("</" + tagName + ">");
+			sb.append("\n");
+		}
+		sb.append("</Result>");
+		sb.append("\n");
+		sb.append("</ResultSet>");
+		return sb.toString();
+	}
 }

@@ -15,10 +15,43 @@ public class QueryExecutionService
 	public static int
 		RETRY_SLEEP = 10000,//10 seconds
 		RETRY_COUNT = 12, //10 * 12 = 120 seconds, 2minutes
-		NUMBER_OF_DATABASE_CONNECTIONS = 24,
-		NUMBER_OF_HTTP_CONNECTIONS = 150;
+		NUMBER_OF_DATABASE_CONNECTIONS = 5,
+		NUMBER_OF_HTTP_CONNECTIONS = 15;
 	static {
 		initConnectionPool();
+	}
+	
+	public static ArrayList<Holder> getTableDefinition(String query) throws SQLException
+	{
+		ArrayList<Holder> retHldrs = new ArrayList<Holder>();
+		
+		ConnectionResource conn = null;
+		try {
+			conn = getConnection(RETRY_COUNT);
+	    	Statement stmt = conn.getConnection().createStatement();
+	    	ResultSet rs = stmt.executeQuery(query);
+	    	ResultSetMetaData rsmd = rs.getMetaData();
+	    	
+	    	TableDefinition td = new TableDefinition();
+	    	for(int i = 0; i < rsmd.getColumnCount(); i++)
+	    	{
+	    		td.addColumnMetadata(rsmd.getColumnLabel(i+1), rsmd.getColumnClassName(i+1));
+	    	}
+	    	
+    		TableDefinition tdC = td.cloneTableDefinition();
+    		retHldrs = new ArrayList<Holder>();
+    		System.out.println(rs.getRow());
+    		for(String s : tdC.getTableColumnsKeySet())
+    		{
+    			Holder h = tdC.getHolder(s);
+    			retHldrs.add(h);
+    			System.out.println(h.getColumnName() + " " + h.callConversion(rs) + " " + h.getClassType().getName());
+    		}
+	    	conn.setRunningState(false);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return retHldrs;
 	}
 	
 	public static ArrayList<ArrayList<Holder>> collectResults(String query) throws SQLException
@@ -54,17 +87,6 @@ public class QueryExecutionService
 	    	}
 	    	System.out.println();
 	    	conn.setRunningState(false);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return retHolders;
-	}
-	
-	public static ArrayList<ArrayList<Holder>> callSelect(String query) 
-	{
-		ArrayList<ArrayList<Holder>> retHolders = null;
-		try {
-	    	retHolders = QueryExecutionService.collectResults(query);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

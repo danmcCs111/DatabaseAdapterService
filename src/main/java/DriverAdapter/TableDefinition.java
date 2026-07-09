@@ -24,7 +24,6 @@ public class TableDefinition
 			System.out.println("**Metadata** " + columnLabel + " --- "  + columnValue);
 			tableColumnAndType.put(columnLabel, HolderParser.getHolderFromDbType(columnValue, columnLabel));
 		}
-		
 	}
 	
 	protected TableDefinition addAllColumnMetadata(TableDefinition td)

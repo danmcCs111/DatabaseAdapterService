@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,6 +25,7 @@ public class HttpRequestHandler implements HttpHandler
 		REQUEST_TYPE_HEADER_KEY = "Get-request-type",
 		QUERY_TYPE = "Query",
 		UPDATE_TYPE = "Update",
+		TABLE_METADATA_TYPE = "TableMetadata",
 		INSERT_TYPE = "Insert";
 	
 	@Override
@@ -50,25 +52,35 @@ public class HttpRequestHandler implements HttpHandler
 		String responseXml = "";
 		if(h.containsKey(REQUEST_TYPE_HEADER_KEY))
 		{
-			if(h.get(REQUEST_TYPE_HEADER_KEY).contains(QUERY_TYPE))
-			{
-				ArrayList<ArrayList<Holder>> holders = executeQuery(result);
-				responseXml = HolderToXml.holdersToXml(holders);
-				System.out.println(responseXml);
-			}
-			else if(h.get(REQUEST_TYPE_HEADER_KEY).contains(UPDATE_TYPE) || 
-					h.get(REQUEST_TYPE_HEADER_KEY).contains(INSERT_TYPE))
-			{
-				executeUpdate(result);
+			try {
+				if(h.get(REQUEST_TYPE_HEADER_KEY).contains(QUERY_TYPE))
+				{
+					ArrayList<ArrayList<Holder>> holders = executeQuery(result);
+					responseXml = HolderToXml.holdersToXml(holders);
+					System.out.println(responseXml);
+				}
+				else if(h.get(REQUEST_TYPE_HEADER_KEY).contains(UPDATE_TYPE) || 
+						h.get(REQUEST_TYPE_HEADER_KEY).contains(INSERT_TYPE))
+				{
+					executeUpdate(result);
+				}
+				else if(h.get(REQUEST_TYPE_HEADER_KEY).contains(TABLE_METADATA_TYPE))
+				{
+					ArrayList<Holder> holders = executeTableMetadata(result);
+					responseXml = HolderToXml.holderToXml(holders);
+					System.out.println(responseXml);
+				}
+			} catch(SQLException se) {
+				se.printStackTrace();
 			}
 		}
 		
 		return responseXml;
 	}
 	
-	public static ArrayList<ArrayList<Holder>> executeQuery(String query)
+	public static ArrayList<ArrayList<Holder>> executeQuery(String query) throws SQLException
 	{
-		return QueryExecutionService.callSelect(query);
+		return QueryExecutionService.collectResults(query);
 	}
 	
 	public static void execute(String query)
@@ -79,6 +91,11 @@ public class HttpRequestHandler implements HttpHandler
 	public static void executeUpdate(String query)
 	{
 		QueryExecutionService.executeInsertUpdate(query);
+	}
+	
+	public static ArrayList<Holder> executeTableMetadata(String query) throws SQLException
+	{
+		return QueryExecutionService.getTableDefinition(query);
 	}
 	
 	private static String readFromInputStreamToString(InputStream is)
