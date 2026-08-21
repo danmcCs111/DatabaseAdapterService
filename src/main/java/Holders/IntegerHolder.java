@@ -3,6 +3,8 @@ package Holders;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import DriverAdapter.DriverAdapter;
+
 public class IntegerHolder implements Holder
 {
 	private String columnName;
@@ -20,6 +22,7 @@ public class IntegerHolder implements Holder
 			this.ret = rs.getInt(columnName);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			DriverAdapter.databaseDriverConsole.setError(e.getMessage());
 		}
 		return this.ret;
 	}

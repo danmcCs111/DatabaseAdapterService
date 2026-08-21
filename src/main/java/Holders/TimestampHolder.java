@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import DriverAdapter.DriverAdapter;
+
 public class TimestampHolder implements Holder
 {
 	private String columnName;
@@ -21,6 +23,7 @@ public class TimestampHolder implements Holder
 			this.ret = rs.getTimestamp(columnName);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			DriverAdapter.databaseDriverConsole.setError(e.getMessage());
 		}
 		return (this.ret == null)
 				? null

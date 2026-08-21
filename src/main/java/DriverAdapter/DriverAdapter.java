@@ -15,10 +15,13 @@ public class DriverAdapter
 		pass = null;
 	public static String [] 
 		databasePaths = null;
-	public static int portNumber = -1;
-	
+	public static int 
+		portNumber = -1;
 	private static String 
 		regexAlias = "[a-zA-Z]*.db";
+	
+	public static DatabaseDriverConsole 
+		databaseDriverConsole;
 	
 	public static void main(String [] args) throws IOException
 	{
@@ -58,6 +61,9 @@ public class DriverAdapter
 			
 			HttpRequestHandler.execute("ATTACH DATABASE '" + dbPath + "' AS " + alias + ";");
 		}
+		
+		databaseDriverConsole = new DatabaseDriverConsole();
+		databaseDriverConsole.setStatus("Connected.");
 	}
 	
 	private static String getDatabaseAlias(String dbPath)
@@ -76,6 +82,8 @@ public class DriverAdapter
 	        System.out.println("Server is running on port " + portNumber);
 		} catch (IOException e) {
 			e.printStackTrace();
+			databaseDriverConsole.setError(e.getMessage());
+			System.exit(0);
 		}
 	}
 }

@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import DriverAdapter.DriverAdapter;
+
 public class DateHolder implements Holder
 {
 	private String columnName;
@@ -21,6 +23,7 @@ public class DateHolder implements Holder
 			this.ret = rs.getDate(columnName);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			DriverAdapter.databaseDriverConsole.setError(e.getMessage());
 		}
 		return (this.ret == null)
 				? null

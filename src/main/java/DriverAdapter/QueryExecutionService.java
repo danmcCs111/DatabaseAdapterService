@@ -89,6 +89,7 @@ public class QueryExecutionService
 	    	conn.setRunningState(false);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			DriverAdapter.databaseDriverConsole.setError(e.getMessage());
 		}
 		return retHolders;
 	}
@@ -117,6 +118,7 @@ public class QueryExecutionService
 			conn.setRunningState(false);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			DriverAdapter.databaseDriverConsole.setError(e.getMessage());
 		}
 	}
 	
@@ -143,6 +145,7 @@ public class QueryExecutionService
 			conn.setRunningState(false);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			DriverAdapter.databaseDriverConsole.setError(e.getMessage());
 		}
 	}
 	

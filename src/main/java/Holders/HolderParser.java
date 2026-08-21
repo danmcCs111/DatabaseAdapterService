@@ -1,9 +1,10 @@
 package Holders;
 
-import java.lang.reflect.InvocationTargetException;
 import java.sql.Timestamp;
 import java.sql.Date;
 import java.util.HashMap;
+
+import DriverAdapter.DriverAdapter;
 
 public class HolderParser 
 {
@@ -34,18 +35,9 @@ public class HolderParser
 				Class<?> holdClass = databaseClassTypeAndHolder.get(dbClassType.getName());
 				try {
 					retHolder = (Holder) holdClass.getDeclaredConstructor(String.class).newInstance(columnName);
-				} catch (InstantiationException e) {
+				} catch (Exception e) {
 					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
-				} catch (IllegalArgumentException e) {
-					e.printStackTrace();
-				} catch (InvocationTargetException e) {
-					e.printStackTrace();
-				} catch (NoSuchMethodException e) {
-					e.printStackTrace();
-				} catch (SecurityException e) {
-					e.printStackTrace();
+					DriverAdapter.databaseDriverConsole.setError(e.getMessage());
 				}
 			}
 		}

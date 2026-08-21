@@ -14,6 +14,7 @@ import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
+import DriverAdapter.DatabaseDriverConsole;
 import DriverAdapter.DriverAdapter;
 import DriverAdapter.QueryExecutionService;
 import Holders.Holder;
@@ -72,6 +73,7 @@ public class HttpRequestHandler implements HttpHandler
 				}
 			} catch(SQLException se) {
 				se.printStackTrace();
+				DriverAdapter.databaseDriverConsole.setError(se.getMessage());
 			}
 		}
 		
@@ -107,6 +109,7 @@ public class HttpRequestHandler implements HttpHandler
 			br.close();
 		} catch (IOException e) {
 			e.printStackTrace();
+			DriverAdapter.databaseDriverConsole.setError(e.getMessage());
 		}
 		return result;
 	}
@@ -123,6 +126,5 @@ public class HttpRequestHandler implements HttpHandler
 		}
 		return retResponse;
 	}
-	
 
 }
