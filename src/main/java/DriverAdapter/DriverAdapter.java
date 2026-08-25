@@ -80,9 +80,26 @@ public class DriverAdapter
 				String alias = getDatabaseAlias(db);
 				System.out.println(dbPath + " " + alias);
 				
-				HttpRequestHandler.execute("ATTACH DATABASE '" + dbPath + "' AS " + alias + ";");
+				HttpRequestHandler.execute("ATTACH DATABASE '" + dbPath + " ' AS " + alias + ";");
 				//copy to ram
-				HttpRequestHandler.executeUpdate("restore from " + dbPath);
+				String sql = "SELECT name FROM " + alias + ".sqlite_master WHERE type='table';";
+				try {
+					ArrayList<ArrayList<Holder>> hldrs = HttpRequestHandler.executeQuery(sql);
+					for(ArrayList<Holder> hlds : hldrs)
+					{
+						for(Holder h : hlds)
+						{
+							HttpRequestHandler.executeUpdate("CREATE TABLE " + h.getReturnValueString() +
+									" AS SELECT * FROM " + alias + "." + h.getReturnValueString());
+						}
+					}
+					HttpRequestHandler.executeUpdate("DETACH DATABASE " + alias);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+//				HttpRequestHandler.executeUpdate("restore from " + dbPath);
+				
 			}
 			
 		}
