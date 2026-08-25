@@ -8,7 +8,7 @@ public class ConnectionResource
 {
 	private Connection 
 		conn = null;
-	private boolean 
+	private boolean
 		isRunning = false;
 	
 	public ConnectionResource()
@@ -37,9 +37,8 @@ public class ConnectionResource
 	
 	public void buildConnection() throws SQLException
 	{
-		Connection con = (DriverAdapter.user != null)
-				? DriverManager.getConnection(DriverAdapter.dbUrl, DriverAdapter.user, DriverAdapter.pass)
-				: DriverManager.getConnection(DriverAdapter.dbUrl);
-		conn = con;
+		conn = (DriverAdapter.user != null)
+			? DriverManager.getConnection(DriverAdapter.dbUrl, DriverAdapter.user, DriverAdapter.pass)
+			: DriverManager.getConnection(DriverAdapter.dbUrl);
 	}
 }

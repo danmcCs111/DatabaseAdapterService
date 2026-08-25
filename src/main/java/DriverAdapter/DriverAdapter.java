@@ -3,8 +3,12 @@ package DriverAdapter;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 import com.sun.net.httpserver.HttpServer;
 
+import Holders.Holder;
 import HttpHandler.HttpRequestHandler;
 
 public class DriverAdapter 
@@ -22,45 +26,67 @@ public class DriverAdapter
 	
 	public static DatabaseDriverConsole 
 		databaseDriverConsole;
+	public static boolean
+		isReadOnlyInMemory = false;
 	
 	public static void main(String [] args) throws IOException
 	{
-		if(args.length == 4)
-		{
-			dbUrl = args[0];
-			user = args[1];
-			pass = args[2];
-			portNumber = Integer.parseInt(args[3]);
-		}
-		else if(args.length == 3)
+		if(args.length == 3)
 		{
 			dbUrl = args[0];
 			portNumber = Integer.parseInt(args[1]);
 			databasePaths = args[2].split(",");
+		}
+		else if(args.length == 4)
+		{
+			dbUrl = args[0];
+			portNumber = Integer.parseInt(args[1]);
+			databasePaths = args[2].split(",");
+			isReadOnlyInMemory = Boolean.parseBoolean(args[3]);
+			
 		}
 		else
 		{
 			System.out.println(
 				"Enter options \n" +
 				"[database url] (required) \n" +
-				"[user] \n" +
-				"[password] \n" +
-				"[port number] (required)\n"
+				"[port number] (required)\n" + 
+				"[database paths] (required)" +
+				"<load as memory read-only> (optional default false)"
 			);
 			return;
 		}
 		
 		listenHttp();
 		
-		for(String db : databasePaths)
+		if(!isReadOnlyInMemory)
 		{
-			File f = new File(db);
-			String dbPath = f.getCanonicalPath();
-			String alias = getDatabaseAlias(db);
-			System.out.println(dbPath + " " + alias);
-			
-			HttpRequestHandler.execute("ATTACH DATABASE '" + dbPath + "' AS " + alias + ";");
+			for(String db : databasePaths)
+			{
+				File f = new File(db);
+				String dbPath = f.getCanonicalPath();
+				String alias = getDatabaseAlias(db);
+				System.out.println(dbPath + " " + alias);
+				
+				HttpRequestHandler.execute("ATTACH DATABASE '" + dbPath + "' AS " + alias + ";");
+			}
 		}
+		else
+		{
+			for(String db : databasePaths)
+			{
+				File f = new File(db);
+				String dbPath = f.getCanonicalPath();
+				String alias = getDatabaseAlias(db);
+				System.out.println(dbPath + " " + alias);
+				
+				HttpRequestHandler.execute("ATTACH DATABASE '" + dbPath + "' AS " + alias + ";");
+				//copy to ram
+				HttpRequestHandler.executeUpdate("restore from " + dbPath);
+			}
+			
+		}
+		
 		
 		databaseDriverConsole = new DatabaseDriverConsole();
 		databaseDriverConsole.setStatus("Connected.");
